@@ -4,11 +4,16 @@
 <h1>{{post.post_header}}</h1>
 <p>{{post.post_text}}</p>
 
-<button><a href="{% url "blog:update_post" post.id %}" class="link-dark text-decoration-none">Update</a></button>
+
+<form action="{% url "blog:update_post" post.id%}" method="podt">
+    {% csrf_token %}
+    <button type="submit">Update</button>
+</form>
 <form action="{% url "blog:delete_post" post.id %}" method="post">
     {% csrf_token %}
     <button type="submit">Delete</button>
 </form>
+{% comment %} <button><a href="{% url "blog:update_post" post.id %}" class="link-dark text-decoration-none">Update</a></button> {% endcomment %}
 {% comment %} <button><a href="{% url "blog:delete_post" post.id %}" class="link-dark text-decoration-none">Delete</a></button> {% endcomment %}
 {% endif %}
 {% endblock content %}
