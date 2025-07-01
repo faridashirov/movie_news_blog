@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    {% for post in posts %}
+        <!-- <h1>{{ post.post_header }}</h1>
+        <p>{{ post.post_text }}</p> -->
+        <a class="link-dark text-decoration-none" href="{% url "blog:post" post.id %}">{{ post.post_header }}</a><br>
+    {% endfor %}
+{% endblock content %}
+
+
+   
