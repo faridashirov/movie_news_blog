@@ -3,6 +3,7 @@ from django.views.generic import ListView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from .models import Post
 from .forms import PostForm
 
@@ -33,6 +34,7 @@ def post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     return render(request, 'post.html', {"post": post})
 
+@login_required(login_url="/")
 def new_post(request):
     if request.method == "POST":
         form = PostForm(request.POST)
