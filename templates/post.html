@@ -4,8 +4,8 @@
 <h1>{{post.post_header}}</h1>
 <p>{{post.post_text}}</p>
 
-
-<form action="{% url "blog:update_post" post.id%}" method="podt">
+{% if user == post.author or user.is_superuser %}
+<form action="{% url "blog:update_post" post.id%}" method="post">
     {% csrf_token %}
     <button type="submit">Update</button>
 </form>
@@ -13,6 +13,8 @@
     {% csrf_token %}
     <button type="submit">Delete</button>
 </form>
+{% endif %}
+
 {% comment %} <button><a href="{% url "blog:update_post" post.id %}" class="link-dark text-decoration-none">Update</a></button> {% endcomment %}
 {% comment %} <button><a href="{% url "blog:delete_post" post.id %}" class="link-dark text-decoration-none">Delete</a></button> {% endcomment %}
 {% endif %}

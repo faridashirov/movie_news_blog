@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from .models import Post
 from .forms import PostForm
 
@@ -17,6 +18,7 @@ class PostList(ListView):
     model = Post
     template_name = 'post_list.html'
 
+@method_decorator(login_required(login_url="/"), name="dispatch")
 class UpdatePost(UpdateView):
     model = Post
     template_name = "update_post.html"
@@ -25,6 +27,8 @@ class UpdatePost(UpdateView):
     def get_success_url(self):
         return reverse_lazy("blog:index")
     
+
+@login_required(login_url="/")
 def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
@@ -39,7 +43,9 @@ def new_post(request):
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
-            form.save()
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
             return redirect("/")
     else:
         form = PostForm()
