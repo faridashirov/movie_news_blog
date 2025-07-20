@@ -5,10 +5,10 @@
 <p>{{post.post_text}}</p>
 
 {% if user == post.author or user.is_superuser %}
-<form action="{% url "blog:update_post" post.id%}" method="post">
-    {% csrf_token %}
-    <button type="submit">Update</button>
-</form>
+<a href="{% url 'blog:update_post' post.id %}">
+    <button type="button">Update</button>
+</a>
+
 <form action="{% url "blog:delete_post" post.id %}" method="post">
     {% csrf_token %}
     <button type="submit">Delete</button>

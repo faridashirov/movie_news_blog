@@ -18,7 +18,7 @@ class PostList(ListView):
     model = Post
     template_name = 'post_list.html'
 
-@method_decorator(login_required(login_url="/"), name="dispatch")
+@method_decorator(login_required, name="dispatch")
 class UpdatePost(UpdateView):
     model = Post
     template_name = "update_post.html"
