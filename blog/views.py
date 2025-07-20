@@ -14,9 +14,14 @@ from .forms import PostForm
 #     return render(request, 'post_list.html', {'posts': posts})
 
 class PostList(ListView):
-    context_object_name = "posts"
     model = Post
+    firld = ["post_header", "post_text", "image"]
+    context_object_name = "posts"
     template_name = 'post_list.html'
+    
+    def get_queryset(self):
+        return Post.objects.all().order_by("-post_date", "-post_time", "-id")
+    
 
 @method_decorator(login_required(login_url="/"), name="dispatch")
 class UpdatePost(UpdateView):

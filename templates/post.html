@@ -7,6 +7,12 @@
 {% endif %}
 <p>{{post.post_text}}</p>
 
+{% if post.post_time and post.post_date %}
+<p> {{post.post_date}} | {{post.post_time}} </p>
+{% else %}
+<p>no post_time!</p>
+{% endif %}
+
 {% if user == post.author or user.is_superuser %}
 <a href="{% url 'blog:update_post' post.id %}">
     <button type="button">Update</button>
