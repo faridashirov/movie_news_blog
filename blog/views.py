@@ -18,11 +18,11 @@ class PostList(ListView):
     model = Post
     template_name = 'post_list.html'
 
-@method_decorator(login_required, name="dispatch")
+@method_decorator(login_required(login_url="/"), name="dispatch")
 class UpdatePost(UpdateView):
     model = Post
     template_name = "update_post.html"
-    fields = ["post_header", "post_text"]
+    fields = ["post_header", "post_text", "image"]
 
     def get_success_url(self):
         return reverse_lazy("blog:index")
@@ -41,7 +41,7 @@ def post(request, post_id):
 @login_required(login_url="/")
 def new_post(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user

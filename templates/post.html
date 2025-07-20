@@ -2,6 +2,9 @@
 {% block content %}
 {% if post %}
 <h1>{{post.post_header}}</h1>
+{% if post.image %}
+<img src="{{ post.image.url }}" alt="Post Image" style="max-width: 500px; height: auto;">
+{% endif %}
 <p>{{post.post_text}}</p>
 
 {% if user == post.author or user.is_superuser %}
@@ -15,8 +18,6 @@
 </form>
 {% endif %}
 
-{% comment %} <button><a href="{% url "blog:update_post" post.id %}" class="link-dark text-decoration-none">Update</a></button> {% endcomment %}
-{% comment %} <button><a href="{% url "blog:delete_post" post.id %}" class="link-dark text-decoration-none">Delete</a></button> {% endcomment %}
 {% endif %}
 {% endblock content %}
 

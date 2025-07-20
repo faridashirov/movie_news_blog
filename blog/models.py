@@ -7,6 +7,7 @@ class Post(models.Model):
     post_header = models.CharField(max_length=30)
     post_text = models.TextField()
     post_date = models.DateField(default=date.today)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
