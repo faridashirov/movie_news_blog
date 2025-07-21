@@ -1,29 +1,32 @@
 {% extends "base.html" %}
+
 {% block content %}
-{% if post %}
-<h1>{{post.post_header}}</h1>
-{% if post.image %}
-<img src="{{ post.image.url }}" alt="Post Image" style="max-width: 500px; height: auto;">
-{% endif %}
-<p>{{post.post_text}}</p>
+<div class="container py-4">
+  {% if post %}
+    <div class="card shadow-sm">
+      {% if post.image %}
+        <img src="{{ post.image.url }}" class="card-img-top" style="max-height: 400px; object-fit: cover;">
+      {% endif %}
+      <div class="card-body">
+        <h2 class="card-title">{{ post.post_header }}</h2>
+        <p class="text-muted">{{ post.post_date }} | {{ post.post_time|time:"H:i" }}</p>
+        <p class="card-text">{{ post.post_text }}</p>
 
-{% if post.post_time and post.post_date %}
-<p> {{post.post_date}} | {{post.post_time}} </p>
-{% else %}
-<p>no post_time!</p>
-{% endif %}
-
-{% if user == post.author or user.is_superuser %}
-<a href="{% url 'blog:update_post' post.id %}">
-    <button type="button">Update</button>
-</a>
-
-<form action="{% url "blog:delete_post" post.id %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Delete</button>
-</form>
-{% endif %}
-
-{% endif %}
+        {% if user == post.author or user.is_superuser %}
+          <div class="d-flex gap-2 mt-4">
+            <a href="{% url 'blog:update_post' post.id %}" class="btn btn-outline-warning">Update</a>
+            <form action="{% url 'blog:delete_post' post.id %}" method="post" style="display: inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-outline-danger">Delete</button>
+            </form>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% else %}
+    <div class="alert alert-warning" role="alert">
+      Post not found.
+    </div>
+  {% endif %}
+</div>
 {% endblock content %}
-
