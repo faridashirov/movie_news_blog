@@ -15,7 +15,6 @@ from .forms import PostForm
 
 class PostList(ListView):
     model = Post
-    firld = ["post_header", "post_text", "image"]
     context_object_name = "posts"
     template_name = 'post_list.html'
     
