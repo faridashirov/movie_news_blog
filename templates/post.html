@@ -10,7 +10,7 @@
       <div class="card-body">
         <h2 class="card-title">{{ post.post_header }}</h2>
         <p class="text-muted">{{ post.post_date }} | {{ post.post_time|time:"H:i" }}</p>
-        <p class="card-text">{{ post.post_text }}</p>
+        <p class="card-text">{{ post.post_text|linebreaksbr }}</p>
 
         {% if user == post.author or user.is_superuser %}
           <div class="d-flex gap-2 mt-4">
