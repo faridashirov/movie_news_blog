@@ -18,7 +18,15 @@ class PostList(ListView):
     context_object_name = "posts"
     template_name = 'post_list.html'
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get("q", "")
+        return context
+    
     def get_queryset(self):
+        query = self.request.GET.get("q")
+        if query:
+            return Post.objects.filter(post_header__icontains=query).order_by("-post_date", "-post_time", "-id")
         return Post.objects.all().order_by("-post_date", "-post_time", "-id")
     
 
