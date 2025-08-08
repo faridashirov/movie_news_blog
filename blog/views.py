@@ -8,11 +8,6 @@ from django.utils.decorators import method_decorator
 from .models import Post
 from .forms import PostForm
 
-# Create your views here.
-# def index(request):
-#     posts = Post.objects.all()
-#     return render(request, 'post_list.html', {'posts': posts})
-
 class PostList(ListView):
     model = Post
     context_object_name = "posts"
