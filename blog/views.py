@@ -21,6 +21,8 @@ class PostList(ListView):
     def get_queryset(self):
         query = self.request.GET.get("q")
         if query:
+            if Post.objects.filter(author__username__icontains=query).exists():
+                return Post.objects.filter(author__username__icontains=query).order_by("-post_date", "-post_time", "-id")
             return Post.objects.filter(post_header__icontains=query).order_by("-post_date", "-post_time", "-id")
         return Post.objects.all().order_by("-post_date", "-post_time", "-id")
     
