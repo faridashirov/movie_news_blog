@@ -9,8 +9,12 @@ class Post(models.Model):
     post_date = models.DateField(default=date.today)
     post_time = models.TimeField(auto_now_add=True, editable=False)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
+    likes = models.ManyToManyField(User, related_name='liked_posts', blank=True)
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def get_like_count(self):
+        return self.likes.count()
 
     def __str__(self):
         return self.post_header

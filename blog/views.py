@@ -43,8 +43,8 @@ def delete_post(request, pk):
     post.delete()
     return redirect("blog:index")
 
-def post(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+def post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
     return render(request, 'post.html', {"post": post})
 
 @login_required(login_url="/")
@@ -60,3 +60,13 @@ def new_post(request):
         form = PostForm()
 
     return render(request, "new_post.html", {"form": form})
+
+def like_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+        
+    return redirect("blog:post", pk=pk)

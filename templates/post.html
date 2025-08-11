@@ -12,6 +12,17 @@
         <p class="text-muted">{{ post.post_date }} | {{ post.post_time|time:"H:i" }}</p>
         <p class="card-text">{{ post.post_text|linebreaksbr }}</p>
 
+        <form action="{% url 'blog:like_post' post.id %}" >
+          {% csrf_token %}
+          {% if user in post.likes.all %}
+            <button type="submit">💔 Remove Like</button>
+          {% else %}
+            <button type="submit">❤️ Like</button>
+          {% endif %}
+
+          <span class="badge bg-secondary">{{ post.get_like_count }} Likes</span>
+        </form>
+
         {% if user == post.author or user.is_superuser %}
           <div class="d-flex gap-2 mt-4">
             <a href="{% url 'blog:update_post' post.id %}" class="btn btn-outline-warning">Update</a>
