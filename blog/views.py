@@ -64,9 +64,12 @@ def new_post(request):
 def like_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
-    if request.user in post.likes.all():
-        post.likes.remove(request.user)
+    if request.user.is_authenticated:
+        if request.user in post.likes.all():
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
     else:
-        post.likes.add(request.user)
+        return redirect("accounts:login")
         
     return redirect("blog:post", pk=pk)
