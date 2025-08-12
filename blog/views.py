@@ -34,7 +34,7 @@ class UpdatePost(UpdateView):
     fields = ["post_header", "post_text", "image"]
 
     def get_success_url(self):
-        return reverse_lazy("blog:post", kwargs={"post_id": self.object.id})
+        return reverse_lazy("blog:post", kwargs={"pk": self.object.id})
     
 
 @login_required(login_url="/")
