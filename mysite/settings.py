@@ -152,6 +152,3 @@ cloudinary.config(
 
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-print("Cloudinary config:", CLOUDINARY_STORAGE)
-print("Default storage:", DEFAULT_FILE_STORAGE)
